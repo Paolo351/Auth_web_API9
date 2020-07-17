@@ -24,21 +24,21 @@ namespace web_API9.Controllers
         private readonly DeploymentService _DeploymentService;
         private readonly ProjectService _ProjectService;
         private readonly DatabaseService _DatabaseService;
-        //private readonly UserManager<UserWithIdentity> _userManager;
+        private readonly UserManager<UserWithIdentity> _userManager;
 
         public UserController(
             Userservice Userservice, 
             DatabaseService DatabaseService, 
             DeploymentService DeploymentService, 
-            ProjectService ProjectService
-            //UserManager<UserWithIdentity> userManager
+            ProjectService ProjectService,
+            UserManager<UserWithIdentity> userManager
             )
         {
             _Userservice = Userservice;
             _ProjectService = ProjectService;
             _DatabaseService = DatabaseService;
             _DeploymentService = DeploymentService;
-            //_userManager = userManager;
+            _userManager = userManager;
         }
 
 
@@ -47,7 +47,7 @@ namespace web_API9.Controllers
         public IActionResult ShowAllUser()
         {
 
-            var User_list = new List<User>(_Userservice.Get());
+            var User_list = new List<UserWithIdentity>(_Userservice.Get());
 
             var viewModel = new ShowAllUserViewModel()
             {
@@ -62,7 +62,13 @@ namespace web_API9.Controllers
         [HttpGet("AddUser")]
         public IActionResult AddUser(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
         {
-            var uzer = new User(FirstName, LastName, PasswordHash, Email, Role);
+            //var uzerOrigin = new User(FirstName, LastName, PasswordHash, Email, Role);
+
+            var uzer =  new UserWithIdentity(FirstName, LastName, Email, Role);
+
+            //var result = await _userManager.CreateAsync(uzer, PasswordHash);
+
+            //UserWithIdentity uzer2 = new UserWithIdentity();
 
             //var user = new UserWithIdentity(uzer);
 
@@ -70,9 +76,11 @@ namespace web_API9.Controllers
 
             //if (result.Succeeded)
             //{
-                var User_list = new List<User>();
+                var User_list = new List<UserWithIdentity>();
 
-                User_list.Add(_Userservice.Create(uzer));
+            //_Userservice.Create(uzer)
+
+            User_list.Add(_Userservice.Create(uzer, PasswordHash));
 
                 var viewModel = new ShowAllUserViewModel()
                 {
@@ -105,7 +113,7 @@ namespace web_API9.Controllers
             {
                 var user_do_kasacji = _Userservice.Get(UserId);
 
-                var user_list = new List<User>();
+                var user_list = new List<UserWithIdentity>();
 
                user_list.Add(user_do_kasacji);
 
@@ -167,7 +175,7 @@ namespace web_API9.Controllers
         {
             var lista_userow = new List<SelectListItem>();
 
-            var user_list = new List<User>(_Userservice.Get());
+            var user_list = new List<UserWithIdentity>(_Userservice.Get());
 
             foreach (var document in user_list)
             {

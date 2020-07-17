@@ -87,21 +87,21 @@ namespace web_API9.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string FirstName, string LastName, string PasswordHash, string Email)
+        public async Task<IActionResult> Register(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
         {
             //register functionality
-            var uzer = new User(FirstName, LastName, PasswordHash, Email, (UserRole)1);
+            var uzer = new UserWithIdentity(FirstName, LastName, Email, Role);
 
            // var userOrigin = new User("Paul", "Cichocki", PasswordHash, Email, (UserRole)1);
 
-            var user = new UserWithIdentity(uzer);
+            //var user = new UserWithIdentity(uzer);
 
-            var result = await _userManager.CreateAsync(user, PasswordHash);
+            var result = await _userManager.CreateAsync(uzer, PasswordHash);
 
             if (result.Succeeded)
             {
                 // sign in user
-                var signInresult = await _signInManager.PasswordSignInAsync(user, PasswordHash, false, false);
+                var signInresult = await _signInManager.PasswordSignInAsync(uzer, PasswordHash, false, false);
 
                 if (signInresult.Succeeded)
                 {

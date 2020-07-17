@@ -7,6 +7,6 @@ namespace web_API9.Models.Application.User
 {
     public class ShowAllUserViewModel
     {
-        public List<User> Users { get; set; }
+        public List<UserWithIdentity> Users { get; set; }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using web_API9.Infrastructure;
 using web_API9.Models.Application.Database;
 using web_API9.Models.Application.Deployment;
@@ -108,7 +104,7 @@ namespace web_API9.Controllers
             var slist_database = new SelectList(lista_baz, "Value", "Text");
            
             var lista_userow = new List<SelectListItem>();
-            var user_list = new List<User>(_Userservice.Get());
+            var user_list = new List<UserWithIdentity>(_Userservice.Get());
             foreach (var document in user_list)
             {
                 lista_userow.Add(new SelectListItem { Selected = false, Text = document.FullName, Value = document.UserId });

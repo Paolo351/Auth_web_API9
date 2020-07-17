@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.AspNetCore.Identity;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -14,32 +15,41 @@ namespace web_API9.Infrastructure
 { 
     public class Userservice
     {
-        private readonly IMongoCollection<User> _Users;
+        private readonly IMongoCollection<UserWithIdentity> _Users;
+        private readonly UserManager<UserWithIdentity> _userManager;
 
-        public Userservice(IMongoBDO settings)
+        public Userservice(IMongoBDO settings, UserManager<UserWithIdentity> userManager)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _Users = database.GetCollection<User>(settings.CollectionName_user);
+            _Users = database.GetCollection<UserWithIdentity>(settings.CollectionName_user);
+
+            _userManager = userManager;
         }
 
 
-        public List<User> Get() =>
+        public List<UserWithIdentity> Get() =>
             _Users.Find(User => true).ToList();
 
 
-        public User Create(User User)
+        public UserWithIdentity Create(UserWithIdentity User, string PasswordHash)
         {
-            _Users.InsertOne(User);
-            return User;
+            //_Users.InsertOne(User);
+            var result =  _userManager.CreateAsync(User, PasswordHash);
+
+            if (result != null)
+            {
+                return User;
+
+            } else return null;   
         }
 
-        public User Get(string id) =>
-           _Users.Find<User>(User => User.UserId == id).FirstOrDefault();
+        public UserWithIdentity Get(string id) =>
+           _Users.Find<UserWithIdentity>(UserWithIdentity => UserWithIdentity.UserId == id).FirstOrDefault();
 
         public void Remove(string id) =>
-            _Users.DeleteOne(User => User.UserId == id);
+            _Users.DeleteOne(UserWithIdentity => UserWithIdentity.UserId == id);
 
     }
 }
