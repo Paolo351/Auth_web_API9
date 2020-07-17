@@ -80,39 +80,39 @@ namespace web_API9.Controllers
             return View("NoSecret");
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View("Register");
-        }
+        //[HttpGet]
+        //public IActionResult Register()
+        //{
+        //    return View("Register");
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Register(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
-        {
-            //register functionality
-            var uzer = new UserWithIdentity(FirstName, LastName, Email, Role);
+        //[HttpPost]
+        //public async Task<IActionResult> Register(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
+        //{
+        //    //register functionality
+        //    var uzer = new UserWithIdentity(FirstName, LastName, Email, Role);
 
-           // var userOrigin = new User("Paul", "Cichocki", PasswordHash, Email, (UserRole)1);
+        //   // var userOrigin = new User("Paul", "Cichocki", PasswordHash, Email, (UserRole)1);
 
-            //var user = new UserWithIdentity(uzer);
+        //    //var user = new UserWithIdentity(uzer);
 
-            var result = await _userManager.CreateAsync(uzer, PasswordHash);
+        //    var result = await _userManager.CreateAsync(uzer, PasswordHash);
 
-            if (result.Succeeded)
-            {
-                // sign in user
-                var signInresult = await _signInManager.PasswordSignInAsync(uzer, PasswordHash, false, false);
+        //    if (result.Succeeded)
+        //    {
+        //        // sign in user
+        //        var signInresult = await _signInManager.PasswordSignInAsync(uzer, PasswordHash, false, false);
 
-                if (signInresult.Succeeded)
-                {
-                    return View("LoginOK");
+        //        if (signInresult.Succeeded)
+        //        {
+        //            return View("LoginOK");
 
-                } else return View("LoginFailed");
+        //        } else return View("LoginFailed");
 
-            } else return View("RegisterFailed");
+        //    } else return View("RegisterFailed");
 
             
-        }
+        //}
 
         
 

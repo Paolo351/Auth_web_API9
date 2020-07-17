@@ -25,7 +25,7 @@
 
             <form asp-controller="Database" asp-action="DelDatabase" method="get"  class="mt-sm-3">
                 <div class="form-group row">
-                    <div class="col-sm-2"><label asp-for="DatabaseId">Database Id</label></div>
+                    <div class="col-sm-2"><label asp-for="DatabaseId">Database name</label></div>
                     <div class="col-sm-6"><select asp-for="DatabaseId" asp-items="@Model.SDatabaselist" class="col-sm-11"></select></div>
                     <div class="col-sm-4"><button type="submit">Delete a database</button></div>
                 </div>

@@ -93,7 +93,7 @@
 
         <form asp-controller="Deployment" asp-action="DelDeployment" method="get" class="mt-sm-3">
             <div class="form-group row">
-                <div class="col-sm-3"><label asp-for="DeploymentId" class="col-form-label">Deployment Id</label></div>
+                <div class="col-sm-3"><label asp-for="DeploymentId" class="col-form-label">Deployment name</label></div>
                 <div class="col-sm-5"><select asp-for="DeploymentId" asp-items="@Model.SDeploymentlist" class="col-sm-11"></select></div>
                 <div><button type="submit" class="col-sm-12">Delete a deployment</button></div>
             </div>

@@ -1,12 +1,32 @@
-﻿@{ 
+﻿@model web_API9.Models.LoginViewModel
+
+@{ 
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
 
-<h1>Login Page</h1>
 
-<form action="/Home/Login" method="post">
-    <input type="text" name="UserName" value="Pawel.Cichocki" />
-    <input type="text" name="PasswordHash" value="123pass" />
-    <button type="submit">Login</button>
-</form>
+<div class="text-left">
+
+    <div class="form-group row">
+        <div class="col-sm-12"><h1 class="display-5">Please enter your username and password</h1></div>
+    </div>
+
+
+    <form asp-controller="Home" asp-action="Login" method="post" class="mt-sm-3">
+        <div class="form-group row">
+            <div class="col-sm-2"><label asp-for="UserName">Username</label></div>
+            <div class="col-sm-6"><input type="text" asp-for="UserName" value="Pawel.Cichocki" class="col-sm-11"></div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2"><label asp-for="PasswordHash">Password</label></div>
+            <div class="col-sm-6"><input type="password" asp-for="PasswordHash" value="123pass" class="col-sm-11"></div>
+            <div class="col-sm-4"><button type="submit">Login</button></div>
+        </div>
+    </form>
+
+    <div class="form-group row">
+        <div class="col-sm-12"><a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Back to home page</a></div>
+    </div>
+
+</div>

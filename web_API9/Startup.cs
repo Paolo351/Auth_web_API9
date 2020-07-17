@@ -50,8 +50,11 @@ namespace web_API9
             services.AddAuthentication("CookieAuth")
                 .AddCookie("CookieAuth", config =>
                 {
-                    config.Cookie.Name = "Grandmas.Cookie";
-                    config.LoginPath = "/Home/Authenticate";
+                    //config.Cookie.Name = "Grandmas.Cookie";
+                    //config.LoginPath = "/Home/Authenticate";
+
+                    config.Cookie.Name = "Identity.Cookie";
+                    config.LoginPath = "/Home/NoSecret";
                 });
 
             //services.AddAuthorization();

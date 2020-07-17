@@ -18,20 +18,22 @@ namespace web_API9.Controllers
         private readonly ProjectService _ProjectService;
         private readonly DatabaseService _DatabaseService;
         private readonly UserManager<UserWithIdentity> _userManager;
+        private readonly SignInManager<UserWithIdentity> _signInManager;
 
         public UserController(
             Userservice Userservice, 
             DatabaseService DatabaseService, 
             DeploymentService DeploymentService, 
             ProjectService ProjectService,
-            UserManager<UserWithIdentity> userManager
-            )
+            UserManager<UserWithIdentity> userManager,
+            SignInManager<UserWithIdentity> signInManager)
         {
             _Userservice = Userservice;
             _ProjectService = ProjectService;
             _DatabaseService = DatabaseService;
             _DeploymentService = DeploymentService;
             _userManager = userManager;
+            _signInManager = signInManager; 
         }
 
 
@@ -88,7 +90,7 @@ namespace web_API9.Controllers
 
 
         [HttpGet("DelUser")]
-        public IActionResult DelUser(string UserId)
+        public async Task<IActionResult> DelUser(string UserId)
         {
             var all_deployments_list = new List<Deployment>(_DeploymentService.Get());
 
@@ -120,6 +122,8 @@ namespace web_API9.Controllers
                 };
 
                 _Userservice.Remove(user_do_kasacji.UserId);
+
+                await _signInManager.SignOutAsync();
 
                 return View(viewModel);
             }
