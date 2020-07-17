@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using web_API9.Models;
 using web_API9.Infrastructure;
-using web_API9.Models.Application.Database;
 using web_API9.Models.Application.Deployment;
-using web_API9.Models.Application.Project;
 using web_API9.Models.Application.User;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace web_API9.Controllers
 {
@@ -60,13 +53,13 @@ namespace web_API9.Controllers
 
         
         [HttpGet("AddUser")]
-        public IActionResult AddUser(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
+        public async Task<IActionResult> AddUser(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
         {
             //var uzerOrigin = new User(FirstName, LastName, PasswordHash, Email, Role);
 
             var uzer =  new UserWithIdentity(FirstName, LastName, Email, Role);
 
-            //var result = await _userManager.CreateAsync(uzer, PasswordHash);
+            var result = await _userManager.CreateAsync(uzer, PasswordHash);
 
             //UserWithIdentity uzer2 = new UserWithIdentity();
 
@@ -74,13 +67,13 @@ namespace web_API9.Controllers
 
             //var result = await _userManager.CreateAsync(user, PasswordHash);
 
-            //if (result.Succeeded)
-            //{
+            if (result.Succeeded)
+            {
                 var User_list = new List<UserWithIdentity>();
 
             //_Userservice.Create(uzer)
 
-            User_list.Add(_Userservice.Create(uzer, PasswordHash));
+                User_list.Add(uzer);
 
                 var viewModel = new ShowAllUserViewModel()
                 {
@@ -88,8 +81,9 @@ namespace web_API9.Controllers
                 };
 
                 return View(viewModel);
-            //}
-            //else return View("NotFound");
+            }
+
+            else return View("NotFound");
         }
 
 
