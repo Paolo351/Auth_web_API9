@@ -1,0 +1,102 @@
+﻿@model web_API9.Models.Application.User.ShowUserViewModel
+
+@{
+    ViewData["Title"] = "ShowUser";
+}
+
+<div class="text-left">
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <h1 class="display-5">User</h1>
+        </div>
+        
+    </div>
+
+    <form asp-controller="User" asp-action="AddUser" method="get" class="mt-sm-3">
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="FirstName" class="col-form-label">First name</label>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" asp-for="FirstName" value="first name" class="col-sm-11">
+            </div> 
+        </div>
+           
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="LastName" class="col-form-label">Last name</label>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" asp-for="LastName" value="last name" class="col-sm-11">
+            </div>
+        </div>
+
+            
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="PasswordHash" class="col-form-label">Password</label>
+            </div>
+            <div class="col-sm-6">
+                    <input type="text" asp-for="PasswordHash" value="password" class="col-sm-11">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="Email" class="col-form-label">Email</label>
+            </div>
+            <div class="col-sm-6">
+                    <input type="text" asp-for="Email" value="email" class="col-sm-11">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label asp-for="Role" class="col-form-label">Role</label>
+            </div>
+            <div class="col-sm-6">
+                <select asp-for="Role" asp-items="Html.GetEnumSelectList<web_API9.Models.Application.User.UserRole>()" class="col-sm-11"></select>
+            </div>
+            <div class="col-sm-4">
+                <button type="submit">Add a user</button>
+            </div>
+
+        </div>
+    </form>
+
+        <form asp-controller="User" asp-action="DelUser" method="get" class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    <label asp-for="UserId" class="col-form-label">User Id</label>
+                </div>
+
+                <div class="col-sm-6">
+                    <select asp-for="UserId" asp-items="@Model.SUserlist" class="col-sm-11"></select>
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit">Delete a user</button>
+                </div>
+            </div>
+        </form>
+
+
+        <form asp-controller="User" asp-action="ShowAllUser" method="get" class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit">Show all users</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Back to home page</a>
+            </div>
+        </div>
+</div>
+

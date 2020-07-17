@@ -1,0 +1,22 @@
+﻿@model web_API9.Models.Application.Deployment.ShowAllDeploymentViewModel
+@{
+    ViewData["Title"] = "NotDelDatabase";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="text-left">
+    <h1 class="display-5">This database cannot be removed. It is attached to the following deployments: </h1>
+    <ul>
+        @foreach (var Deployment in Model.DeploymentToDisplay_List)
+        {
+            <li><b>@Deployment.DeploymentId</b>, Name: <b>@Deployment.Name</b>, Time: <b>@Deployment.TimeOfDeployment.ToShortDateString()</b>, Database: <b>@Deployment.Nazwa_bd</b>, User: <b>@Deployment.Nazwa_user</b>, Project: <b>@Deployment.Nazwa_project</b></li>
+
+
+        }
+    </ul>
+    <form>
+        <a class="nav-link text-light" asp-area="" asp-controller="Database" asp-action="ShowDatabase">Back</a>
+    </form>
+</div>

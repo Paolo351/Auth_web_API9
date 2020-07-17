@@ -1,0 +1,14 @@
+﻿@{ 
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<h1>Register Page</h1>
+
+<form action="/Home/Register" method="post">
+    <input type="text" name="FirstName" value="Pawel" />
+    <input type="text" name="LastName" value="Cichocki" />
+    <input type="text" name="PasswordHash" value="123pass" />
+    <input type="text" name="Email" value="pawelc82@gmail.com" />
+    <button type="submit">Register</button>
+</form>

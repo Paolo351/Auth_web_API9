@@ -1,0 +1,22 @@
+﻿@model web_API9.Models.Application.User.ShowAllUserViewModel
+@{
+    ViewData["Title"] = "DelUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="text-left">
+    <h1 class="display-5">User removed: </h1>
+    <ul>
+        @foreach (var User in Model.Users)
+        {
+        <li><b>@User.UserId</b>, Name: <b>@User.FullName</b>, Email: <b>@User.Email</b>, Role: <b>@User.Role</b></li>
+
+
+        }
+    </ul>
+    <form>
+        <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="ShowUser">Back</a>
+    </form>
+</div>

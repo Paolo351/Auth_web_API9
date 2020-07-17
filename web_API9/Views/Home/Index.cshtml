@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-left">
+        <h1 class="display-5">BDO management panel</h1>
+        <form method="post">
+            <a class="nav-link text-light" asp-area="" asp-controller="Deployment" asp-action="ShowDeployment">Deployment</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="Database" asp-action="ShowDatabase">Database</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="ShowUser">User</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="Project" asp-action="ShowProject">Project</a>
+
+        </form>
+
+
+    </div>

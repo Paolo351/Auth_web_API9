@@ -1,0 +1,41 @@
+﻿@model web_API9.Models.Application.Project.ShowProjectViewModel
+@{
+    ViewData["Title"] = "ShowProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="text-left">
+
+        <div class="form-group row">
+            <div class="col-sm-2"><h1 class="display-5">Project</h1></div>
+        </div>
+
+        <form asp-controller="Project" asp-action="AddProject" method="get" class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-2"><label asp-for="Name">Project name</label></div>
+                <div class="col-sm-6"><input type="text" asp-for="Name" value="name"  class="col-sm-11"></div>
+                <div class="col-sm-4"><button type="submit">Add a project</button></div>
+            </div>
+        </form>
+
+        <form asp-controller="Project" asp-action="DelProject" method="get"  class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-2"><label asp-for="ProjectId">Project Id</label></div>
+                <div class="col-sm-6"><select asp-for="ProjectId" asp-items="@Model.SProjectlist" class="col-sm-11"></select></div>
+                <div class="col-sm-4"><button type="submit">Delete a project</button></div>
+            </div>
+        </form>
+
+        <form asp-controller="Project" asp-action="ShowAllProject" method="get"  class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-4"><button type="submit">Show all projects</button></div>
+            </div>
+        </form>
+
+        <div class="form-group row">
+            <div class="col-sm-12"><a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Back to home page</a></div>
+        </div>
+
+    </div>

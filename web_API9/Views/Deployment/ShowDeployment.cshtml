@@ -1,0 +1,115 @@
+﻿
+@model web_API9.Models.Application.Deployment.ShowDeploymentViewModel
+
+
+    @{
+        ViewData["Title"] = "ShowDeployment";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class="text-left">
+
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <h1 class="display-5">Deployment</h1>
+            </div>
+        </div>
+
+        <form asp-controller="Deployment" asp-action="AddDeployment" method="get" class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-3"><label asp-for="Name" class="col-form-label">Name</label></div>
+                <div class="col-sm-5"><input type="text" asp-for="Name" value="name" class="col-sm-11"></div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3"><label asp-for="DeployMode" class="col-form-label">Deploy mode</label></div>
+                <div class="col-sm-5"><input type="text" asp-for="DeployMode" value="deploy mode" class="col-sm-11"></div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3"><label asp-for="PlannedTimeOfDeployment" class="col-form-label">Planned time of deployment</label></div>
+                <div class="col-sm-5">
+                    <input data-val="true" asp-for="PlannedTimeOfDeployment" data-val-date="The field PlannedTimeOfDeployment must be a date."
+                           data-val-required="The PlannedTimeOfDeployment field is required."
+                           id="PlannedTimeOfDeployment" name="PlannedTimeOfDeployment" type="datetime-local"
+                           value="09/05/2012 15:02:19" class="col-sm-11">
+                </div>
+                <!--<div class="col-sm-5"><input type="text" asp-for="PlannedTimeOfDeployment" value="2020-06-18" class="col-sm-11"></div>-->
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3"><label asp-for="TimeOfDeployment" class="col-form-label">Time of deployment</label></div>
+                <div class="col-sm-5">
+                    <input data-val="true" asp-for="TimeOfDeployment" data-val-date="The field TimeOfDeployment must be a date."
+                           data-val-required="The TimeOfDeployment field is required."
+                           id="TimeOfDeployment" name="TimeOfDeployment" type="datetime-local"
+                           value="09/05/2012 15:02:19" class="col-sm-11">
+                </div>
+                    <!--<div class="col-sm-5"><input type="text" asp-for="TimeOfDeployment " value="2020-06-19" class="col-sm-11"></div>-->
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="Details" class="col-form-label">Details</label></div>
+                    <div class="col-sm-5"><input type="text" asp-for="Details" value="details" class="col-sm-11"></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="HasBeenDeployed" class="col-form-label">Has been deployed? (true or false)</label></div>
+                    <div class="col-sm-5">
+                        <select asp-for="HasBeenDeployed" class="col-sm-11">
+                            <option value="true">true</option>
+                            <option value="false">false</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="AttachedFeatureDescription" class="col-form-label">Attached feature description</label></div>
+                    <div class="col-sm-5"><input type="text" asp-for="AttachedFeatureDescription" value="attached feature description" class="col-sm-11"></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="SchemaContent" class="col-form-label">Schema content</label></div>
+                    <div class="col-sm-5"><input type="text" asp-for="SchemaContent" value="schema content" class="col-sm-11"></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="TargetDbId" class="col-form-label">Select database</label></div>
+                    <div class="col-sm-5"><select asp-for="TargetDbId" asp-items="@Model.SDatabaselist" class="col-sm-11"></select></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="SchemaCreatedByUserId" class="col-form-label">Select user</label></div>
+                    <div class="col-sm-5"><select asp-for="SchemaCreatedByUserId" asp-items="@Model.SUserlist" class="col-sm-11"></select></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-3"><label asp-for="AttachedToProjectId" class="col-form-label">Select project</label></div>
+                    <div class="col-sm-5"><select asp-for="AttachedToProjectId" asp-items="@Model.SProjectlist" class="col-sm-11"></select></div>
+                    <div><button type="submit" class="col-sm-12">Add a deployment</button></div>
+                </div>
+
+</form>
+
+        <form asp-controller="Deployment" asp-action="DelDeployment" method="get" class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-3"><label asp-for="DeploymentId" class="col-form-label">Deployment Id</label></div>
+                <div class="col-sm-5"><select asp-for="DeploymentId" asp-items="@Model.SDeploymentlist" class="col-sm-11"></select></div>
+                <div><button type="submit" class="col-sm-12">Delete a deployment</button></div>
+            </div>
+         </form>
+
+
+        <form asp-controller="Deployment" asp-action="ShowAllDeployment" method="get" class="mt-sm-3">
+            <div class="form-group row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-5"></div>
+                <div><button type="submit" class="col-sm-12">Show all Deployments</button></div>
+            </div>
+        </form>
+
+        <div class="form-group row">
+            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Back to home page</a>
+        </div>
+
+    </div>

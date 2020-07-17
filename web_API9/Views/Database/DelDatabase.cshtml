@@ -1,0 +1,22 @@
+﻿@model web_API9.Models.Application.Database.ShowAllDatabaseViewModel
+@{
+    ViewData["Title"] = "DelDatabase";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="text-left">
+    <h1 class="display-5">Database removed: </h1>
+    <ul>
+        @foreach (var Database in Model.Databases)
+        {
+            <li><b>@Database.DatabaseId</b>, Database name: <b>@Database.Name</b>, Engine: <b>@Database.Engine</b></li>
+
+
+        }
+    </ul>
+    <form>
+        <a class="nav-link text-light" asp-area="" asp-controller="Database" asp-action="ShowDatabase">Back</a>
+    </form>
+</div>

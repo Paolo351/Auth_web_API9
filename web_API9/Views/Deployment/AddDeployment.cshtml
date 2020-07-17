@@ -1,0 +1,22 @@
+﻿@model web_API9.Models.Application.Deployment.ShowAllDeploymentViewModel
+@{
+    ViewData["Title"] = "AddDeployment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="text-left">
+    <h1 class="display-5">Deployment added: </h1>
+    <ul>
+        @foreach (var Deployment in Model.DeploymentToDisplay_List)
+        {
+        <li><b>@Deployment.DeploymentId</b>, Deployment name: <b>@Deployment.Name</b></li>
+
+
+        }
+    </ul>
+    <form>
+        <a class="nav-link text-light" asp-area="" asp-controller="Deployment" asp-action="ShowDeployment">Back</a>
+    </form>
+</div>
