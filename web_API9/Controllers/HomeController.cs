@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetCore.Identity.MongoDB;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -36,20 +37,60 @@ namespace web_API9.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            //await _signInManager.SignOutAsync();
             return View("Index");
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult Secret()
+        public async Task<IActionResult> Secret()
         {
-            return View("Secret");
+            //var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            
+            var viewModel = new ShowUserViewModel()
+            {
+                FullName = (await _userManager.FindByNameAsync(User.Identity.Name)).FullName
+            //FullName = user.FullName
+            };
+
+            return View("Secret", viewModel);
+        }
+
+        [Authorize]
+        //[Authorize(Policy = "Claim.DoB")]
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> AdminSecret()
+        {
+            //var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var viewModel = new ShowUserViewModel()
+            {
+                FullName = (await _userManager.FindByNameAsync(User.Identity.Name)).FullName
+                //FullName = user.FullName
+            };
+
+            return View("Secret", viewModel);
         }
 
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            //_ = new UserWithIdentity();
+
+            if (User.Identity.Name != null)
+            {
+                UserWithIdentity user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                var viewModel = new ShowUserViewModel()
+                {
+                    FullName = user.FullName
+
+                };
+                return View("LoginOK", viewModel);
+
+            }
             return View("Login");
         }
 
@@ -60,6 +101,40 @@ namespace web_API9.Controllers
             //login functionality
             var user = await _userManager.FindByNameAsync(UserName);
 
+            if (user != null) 
+            {
+                string z = "";
+
+                switch ((int)user.Role)
+                {
+                    case 0: z = "Admin"; break;
+                    case 1: z = "Schema_guard"; break;
+                    case 2: z = "Spectator"; break;
+
+                }
+                    
+                var userClaims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, z),
+
+                    new Claim("FirstName", user.FirstName),
+                    new Claim("LastName", user.LastName),
+                    //new Claim("UserName", user.UserName),
+                    new Claim("FullName", user.FullName),
+                    //new Claim("Email", user.Email),
+                    //new Claim("Role", z)
+                };
+
+                var userIdentity = new ClaimsIdentity(userClaims, "user identity");
+
+                var userPrincipal = new ClaimsPrincipal(new[] { userIdentity });
+                //-----------------------------------------------------------
+                await HttpContext.SignInAsync(userPrincipal);
+            }
+                
+
             if (user != null)
             {
                 // sign in user
@@ -67,7 +142,13 @@ namespace web_API9.Controllers
 
                 if (signInresult.Succeeded)
                 {
-                    return View("LoginOK");
+                    var viewModel = new ShowUserViewModel()
+                    {
+                        FullName = user.FullName
+                    };
+
+                    
+                    return View("LoginOK", viewModel);
                 }
             }
 

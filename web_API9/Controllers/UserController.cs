@@ -57,23 +57,19 @@ namespace web_API9.Controllers
         [HttpGet("AddUser")]
         public async Task<IActionResult> AddUser(string FirstName, string LastName, string PasswordHash, string Email, UserRole Role)
         {
-            //var uzerOrigin = new User(FirstName, LastName, PasswordHash, Email, Role);
+            
 
             var uzer =  new UserWithIdentity(FirstName, LastName, Email, Role);
 
             var result = await _userManager.CreateAsync(uzer, PasswordHash);
 
-            //UserWithIdentity uzer2 = new UserWithIdentity();
-
-            //var user = new UserWithIdentity(uzer);
-
-            //var result = await _userManager.CreateAsync(user, PasswordHash);
+            
 
             if (result.Succeeded)
             {
                 var User_list = new List<UserWithIdentity>();
 
-            //_Userservice.Create(uzer)
+            
 
                 User_list.Add(uzer);
 

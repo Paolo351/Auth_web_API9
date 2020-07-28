@@ -1,6 +1,9 @@
-﻿@{ 
+﻿@model web_API9.Models.Application.User.ShowUserViewModel
+
+@{ 
     ViewData["Title"] = "LoginOK";
-    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    ViewData["User"] = Model.FullName + " signed in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <h1>Login successful</h1>
+<h1>Login successful</h1>
