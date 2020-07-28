@@ -56,9 +56,10 @@ namespace web_API9.Controllers
             return View("Secret", viewModel);
         }
 
-        [Authorize]
+        //[Authorize]
         //[Authorize(Policy = "Claim.DoB")]
         //[Authorize(Roles = "Admin")]
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> AdminSecret()
         {

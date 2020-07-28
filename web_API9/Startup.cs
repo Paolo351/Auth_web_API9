@@ -9,6 +9,9 @@ using Microsoft.OpenApi.Models;
 using web_API9.Models.Application.User;
 using Microsoft.AspNetCore.Identity;
 using AspNetCore.Identity.MongoDB;
+using Basics.AuthorizationRequirements;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace web_API9
 {
@@ -57,7 +60,30 @@ namespace web_API9
                     config.LoginPath = "/Home/NoSecret";
                 });
 
-            //services.AddAuthorization();
+            services.AddAuthorization(config =>
+            {
+                //var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                //var defaultAuthPolicy = defaultAuthBuilder
+                //    .RequireAuthenticatedUser()
+                //    .RequireClaim(ClaimTypes.DateOfBirth)
+                //    .Build();
+
+                //config.DefaultPolicy = defaultAuthPolicy;
+
+                //config.AddPolicy("Claim.DoB", policyBuilder =>
+                //{
+                //    policyBuilder.RequireClaim(ClaimTypes.DateOfBirth);
+                //});
+
+                config.AddPolicy("Admin", policyBuilder => policyBuilder.RequireClaim(ClaimTypes.Role, "Admin"));
+
+                //config.AddPolicy("Claim.DoB", policyBuilder =>
+                //{
+                //    policyBuilder.RequireCustomClaim(ClaimTypes.DateOfBirth);
+                //});
+            });
+
+            services.AddScoped<IAuthorizationHandler, CustomRequireClaimHandler>();
 
             services.Configure<MongoBDOSettings>(
                 Configuration.GetSection(nameof(MongoBDOSettings)));
